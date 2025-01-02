@@ -1,0 +1,59 @@
+version: "3.9"
+
+services:
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    container_name: ktest_nginx
+    volumes:
+      - ./api/core/static:/static
+      - ./nginx/config/:/etc/nginx/conf.d/
+    networks:
+      - backend
+    ports:
+      - "80:80"
+    depends_on:
+      - api
+
+  redis:
+    restart: always
+    image: redis:latest
+    ports:
+      - "6379"
+    volumes:
+      - ./redis:/data
+
+  database:
+    image: postgres:latest
+    container_name: ktest_database
+    env_file:
+      - ./.env
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./database/data:/var/lib/postgresql/data
+    networks:
+      - backend
+
+  api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    container_name: ktest_api
+    command: gunicorn core.wsgi:application --bind 0.0.0.0:8000
+    depends_on:
+      - database
+      - redis
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./api/core/:/usr/src/api
+    networks:
+      - backend
+    env_file:
+      - ./.env
+
+networks:
+  backend:
+    name: backend
