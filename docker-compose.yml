@@ -16,14 +16,6 @@ services:
     depends_on:
       - api
 
-  redis:
-    restart: always
-    image: redis:latest
-    ports:
-      - "6379"
-    volumes:
-      - ./redis:/data
-
   database:
     image: postgres:latest
     container_name: ktest_database
