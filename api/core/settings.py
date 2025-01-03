@@ -39,7 +39,7 @@ if DEBUG == True:
     }
 else:
     SECRET_KEY = os.environ.get("SECRET_KEY")
-    ALLOWED_HOSTS = ["localhost"]
+    ALLOWED_HOSTS = ["localhost", "0.0.0.0", "127.0.0.1"]
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.postgresql",
@@ -49,8 +49,6 @@ else:
             "PASSWORD": os.environ.get("POSTGRES_PASSWORD"),
         }
     }
-
-ALLOWED_HOSTS = ['0.0.0.0', 'localhost', '127.0.0.1']
 
 # Django rest framework config
 
