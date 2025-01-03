@@ -1,7 +1,3 @@
-Here’s an improved version of your README with clearer instructions, better formatting, and typo corrections:
-
----
-
 # k2-test
 
 ## Prerequisites
@@ -85,7 +81,3 @@ python manage.py test
 ```
 
 This will run all the test cases in the project.
-
----
-
-Let me know if you need further modifications or additions!
